@@ -201,12 +201,21 @@ const Book = () => {
                     />
                   </div>
                   {suggestions.length > 0 && (
-                    <ul className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-border bg-card p-2">
+                    <ul className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-border bg-card p-2" role="listbox" aria-label="Address suggestions">
                       {suggestions.map((s, i) => (
                         <li
                           key={i}
+                          role="option"
+                          tabIndex={0}
                           onClick={() => handleSelectSuggestion(s)}
-                          className="cursor-pointer rounded-md px-3 py-2 text-sm hover:bg-accent"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              handleSelectSuggestion(s);
+                            }
+                          }}
+                          className="cursor-pointer rounded-md px-3 py-2 text-sm hover:bg-accent focus:bg-accent focus:outline-none"
+                          aria-label={`Select address: ${s.display_name}`}
                         >
                           {s.display_name}
                         </li>
@@ -235,7 +244,13 @@ const Book = () => {
                   />
                 </div>
 
-                <Button onClick={handleStep1Next} disabled={loading} className="w-full">
+                <Button
+                  type="button"
+                  onClick={handleStep1Next}
+                  disabled={loading}
+                  className="w-full"
+                  aria-label="Continue to hospital selection"
+                >
                   {loading ? t('common.loading') : t('booking.next')}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -264,8 +279,11 @@ const Book = () => {
                     {hospitals.map((h) => (
                       <button
                         key={h.id}
+                        type="button"
                         onClick={() => handleHospitalSelect(h)}
-                        className={`w-full rounded-lg border-2 p-4 text-left transition-smooth ${selectedHospital?.id === h.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'}`}
+                        className={`w-full rounded-lg border-2 p-4 text-left transition-smooth focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${selectedHospital?.id === h.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'}`}
+                        aria-pressed={selectedHospital?.id === h.id}
+                        aria-label={`Select ${h.name} hospital, capabilities: ${h.capabilities.join(', ')}`}
                       >
                         <div className="font-semibold">{h.name}</div>
                         <div className="text-sm text-muted-foreground">
@@ -319,11 +337,23 @@ const Book = () => {
               )}
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setStep(1)}
+                  className="flex-1"
+                  aria-label="Go back to pickup details"
+                >
                   <ChevronLeft className="mr-2 h-4 w-4" />
                   {t('booking.back')}
                 </Button>
-                <Button onClick={handleStep2Next} disabled={!selectedHospital} className="flex-1">
+                <Button
+                  type="button"
+                  onClick={handleStep2Next}
+                  disabled={!selectedHospital}
+                  className="flex-1"
+                  aria-label="Continue to booking confirmation"
+                >
                   {t('booking.next')}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -385,11 +415,23 @@ const Book = () => {
                 </div>
 
                 <div className="flex gap-3">
-                  <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setStep(2)}
+                    className="flex-1"
+                    aria-label="Go back to hospital selection"
+                  >
                     <ChevronLeft className="mr-2 h-4 w-4" />
                     {t('booking.back')}
                   </Button>
-                  <Button onClick={handleConfirmBooking} disabled={loading} className="flex-1">
+                  <Button
+                    type="button"
+                    onClick={handleConfirmBooking}
+                    disabled={loading}
+                    className="flex-1"
+                    aria-label="Confirm booking and request ambulance"
+                  >
                     {loading ? t('common.loading') : t('booking.confirm')}
                   </Button>
                 </div>

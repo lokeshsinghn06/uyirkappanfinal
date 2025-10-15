@@ -154,11 +154,22 @@ const Track = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1" disabled>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      disabled
+                      aria-label="Call driver (unavailable)"
+                    >
                       <Phone className="mr-2 h-4 w-4" />
                       {t('tracking.callDriver')}
                     </Button>
-                    <Button variant="outline" size="sm" onClick={handleShare}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleShare}
+                      aria-label="Share tracking link"
+                    >
                       <Share2 className="h-4 w-4" />
                     </Button>
                   </div>

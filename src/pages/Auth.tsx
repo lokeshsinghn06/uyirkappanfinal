@@ -38,14 +38,7 @@ const Auth = () => {
         description: isSignUp ? 'Account created successfully' : 'Signed in successfully',
       });
 
-      // Navigate based on email
-      if (formData.email.includes('operator')) {
-        navigate('/dashboard');
-      } else if (formData.email.includes('driver')) {
-        navigate('/partner');
-      } else {
-        navigate('/');
-      }
+      navigate('/');
     } catch (error) {
       toast({
         title: t('common.error'),
