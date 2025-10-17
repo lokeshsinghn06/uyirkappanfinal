@@ -25,6 +25,9 @@ export const TopNav = () => {
         </Link>
 
         <div className="flex items-center space-x-2">
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/partner" aria-label="Driver Portal">Driver Portal</Link>
+          </Button>
           <Button
             variant="ghost"
             size="icon"
